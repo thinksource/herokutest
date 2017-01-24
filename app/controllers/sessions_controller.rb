@@ -1,7 +1,19 @@
 class SessionsController < ApplicationController
 
   def new
-    redirect_to '/auth/facebook'
+    #redirect_to '/auth/facebook'
+  end
+
+  def redirects
+    user = User.find_by(email: params[:session][:email].downcase, provider: params[:session][:email], business: params[:session][:buiness])
+    if params[:session][:provider]=="facebook"
+      redirect_to '/auth/facebook?business='+params[:session][:business]
+    elsif params[:session][:provider]=="google"
+      redirect_to '/auth/google?business='+params[:session][:business]
+
+    else user && user.authenticate(params[:session][:password])
+
+    end
   end
 
   def create
