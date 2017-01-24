@@ -5,14 +5,18 @@ class SessionsController < ApplicationController
   end
 
   def redirects
-    user = User.find_by(email: params[:session][:email].downcase, provider: params[:session][:email], business: params[:session][:buiness])
+    puts(params[:session][:provider])
+    puts(params[:session][:business])
+    user = User.find_by(email: params[:session][:email].downcase, provider: params[:session][:provider], business: params[:session][:business])
     if params[:session][:provider]=="facebook"
       redirect_to '/auth/facebook?business='+params[:session][:business]
     elsif params[:session][:provider]=="google"
       redirect_to '/auth/google?business='+params[:session][:business]
 
-    else user && user.authenticate(params[:session][:password])
+    elsif user && user.authenticate(params[:session][:password], params[:session][:provider])
 
+    else
+      render html: "Error login"
     end
   end
 

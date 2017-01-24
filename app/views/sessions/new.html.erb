@@ -9,9 +9,9 @@
       <%= f.email_field :email, class: 'form-control' %>
 
       <%= f.label :provider %>
-      <%= select_tag(:provider, options_for_select(
+      <%= f.select(:provider, options_for_select(
         [['local','local'],['facebook','facebook'],['google','google']]
-        ), class: 'form-control'
+        ), {}，{class: 'form-control'}
         )
 
       %>
